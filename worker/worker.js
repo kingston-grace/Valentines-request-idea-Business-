@@ -209,8 +209,8 @@ function generateFallbackResponse(message, privateContext) {
   // Default romantic responses with context
   const responses = [
     "You know I love you, babe! Plus uri Mwana we beam, ahutorinao plan. Say yes? 💖",
-    "My papie, you're the best thing that's ever happened to me. Remember Feb 5? That white dress? Magical. Say yes? 😌💖",
-    "Kabamnini, I brought roses, jokes, and all my love. What more could you want? 💖",
+    "My mimbere, you're the best thing that's ever happened to me. Remember Feb 5? That white dress? Magical. Say yes? 😌💖",
+    "Babe, I brought roses, jokes, and all my love. What more could you want? 💖",
     "Babe, remember those blankets? That's the kind of warmth I want forever. Say yes? 💖",
     "You're my everything, chommy. Your beauty, your intelligence, your everything. Plus you're Mwana we beam! Please say yes? 💖",
     "Chommy, you found both a best friend and boyfriend in me. That's why this matters. Say yes? 💖"
