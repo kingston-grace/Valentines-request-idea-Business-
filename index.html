@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine? 💖</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-background">
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+    </div>
+
+    <!-- Main content card -->
+    <div class="container">
+        <div class="card" id="mainCard">
+            <div class="rose-decoration rose-left"></div>
+            <div class="rose-decoration rose-right"></div>
+            
+            <h1 class="headline">Nyasha, will you be my Valentine?</h1>
+            <p class="subtext">I brought roses, jokes, and a whole lot of love.</p>
+            
+            <div class="buttons-container" id="buttonsContainer">
+                <button class="btn btn-yes" id="yesBtn">
+                    <span>YES</span>
+                    <span class="heart-icon">💖</span>
+                </button>
+                <button class="btn btn-no" id="noBtn">NO</button>
+            </div>
+        </div>
+
+        <!-- Success overlay -->
+        <div class="success-overlay" id="successOverlay">
+            <div class="success-content">
+                <div class="big-heart">💖</div>
+                <h2>Yaaay babe 😭💗</h2>
+                <p class="success-message">I knew you'd say yes! You're the best thing that's ever happened to me.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-button" id="chatButton">
+            <span class="chat-icon">💬</span>
+            <span class="chat-label">Ask me why</span>
+        </div>
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                <h3>Convince Nyasha 💖</h3>
+                <button class="chat-close" id="chatClose">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Hey babe! Ask me anything and I'll convince you why you should say yes 😌💖
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off">
+                <button class="chat-send" id="chatSend">Send</button>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
