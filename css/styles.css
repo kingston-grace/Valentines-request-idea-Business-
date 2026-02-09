@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
 :root {
     --pink-primary: #ff2d6a;
     --pink-light: #ff7aa5;
@@ -22,18 +28,25 @@
 body {
     font-family: var(--font);
     font-weight: 500;
-    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* dynamic viewport on mobile */
     max-height: 100vh;
-    height: 100vh;
     background:
         radial-gradient(ellipse 120% 90% at 5% 0%, rgba(255, 120, 165, 0.6) 0%, transparent 50%),
         radial-gradient(ellipse 100% 100% at 95% 100%, rgba(192, 132, 252, 0.55) 0%, transparent 50%),
         radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251, 113, 133, 0.35) 0%, transparent 60%),
         linear-gradient(160deg, #fff0f5 0%, #fae8ff 30%, #fce7f3 60%, #f5d0fe 100%);
     background-attachment: fixed;
+    overflow: hidden;
     overflow-x: hidden;
     overflow-y: hidden;
-    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 body::before {
@@ -100,20 +113,21 @@ body::before {
     }
 }
 
-/* Main container */
+/* Main container – one screen, no scroll; safe-area for notched devices */
 .container {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 2;
-    min-height: 100vh;
-    max-height: 100vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 16px;
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
     overflow: hidden;
 }
 
-/* Card – clearly glassy: see-through frosted glass so background shows */
+/* Card – glassy, fits one screen (no scroll) */
 .card {
     background: linear-gradient(
         165deg,
@@ -127,9 +141,9 @@ body::before {
     padding: 44px 40px 48px;
     max-width: 540px;
     width: 100%;
-    max-height: 90vh;
-    overflow-x: hidden;
-    overflow-y: auto;
+    max-height: 82vh;
+    min-height: 0;
+    overflow: hidden;
     position: relative;
     text-align: center;
     animation: cardEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -139,6 +153,7 @@ body::before {
         0 8px 32px rgba(255, 45, 106, 0.2),
         0 24px 48px -12px rgba(168, 85, 247, 0.15);
     isolation: isolate;
+    flex-shrink: 1;
 }
 
 /* Glossy top reflection – visible glass shine */
@@ -229,7 +244,7 @@ body::before {
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--pink-primary), var(--purple-primary), transparent);
     border-radius: 3px;
-    margin: 0 auto 24px;
+    margin: 0 auto 20px;
     opacity: 0.9;
 }
 
@@ -278,7 +293,7 @@ body::before {
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--purple-dark);
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     line-height: 1.5;
     opacity: 0.95;
 }
@@ -490,8 +505,8 @@ body::before {
 /* Chat widget */
 .chat-widget {
     position: fixed;
-    top: 28px;
-    right: 28px;
+    top: max(28px, env(safe-area-inset-top));
+    right: max(28px, env(safe-area-inset-right));
     z-index: 100;
 }
 
@@ -793,23 +808,38 @@ body::before {
     }
 }
 
-/* Responsive */
+/* Responsive – tablet */
 @media (max-width: 768px) {
+    .container {
+        padding: 12px;
+    }
+    
     .headline {
-        font-size: 2rem;
+        font-size: 1.85rem;
+        margin-bottom: 12px;
+    }
+    
+    .card-divider {
+        margin-bottom: 14px;
     }
     
     .subtitle {
         font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    
+    .subtitle-line2 {
+        margin-bottom: 18px;
     }
     
     .btn-yes {
-        padding: 18px 50px;
-        font-size: 1.5rem;
+        padding: 16px 44px;
+        font-size: 1.45rem;
     }
     
     .card {
-        padding: 40px 25px;
+        padding: 32px 24px 36px;
+        max-height: 80vh;
     }
     
     .chat-panel {
@@ -838,43 +868,47 @@ body::before {
     }
 }
 
-/* Responsive - Mobile phones */
+/* Responsive – phones: fit one screen, no scroll */
 @media (max-width: 480px) {
     .container {
-        padding: 10px;
+        padding: 10px 12px;
     }
     
     .headline {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+        font-size: 1.45rem;
+        margin-bottom: 10px;
     }
     
-    .subtitle {
-        font-size: 0.85rem;
-        margin-bottom: 6px;
-    }
-    
-    .subtitle-line2 {
-        font-size: 0.85rem;
+    .card-divider {
         margin-bottom: 12px;
     }
     
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+    
+    .subtitle-line2 {
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+    
     .card {
-        padding: 30px 20px;
-        border-radius: 20px;
-        max-height: 90vh;
+        padding: 24px 18px 28px;
+        border-radius: 22px;
+        max-height: 78vh;
     }
     
     .buttons-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
     
     .btn-yes {
         width: 100%;
-        max-width: 280px;
-        padding: 16px 40px;
-        font-size: 1.3rem;
+        max-width: 260px;
+        padding: 14px 32px;
+        font-size: 1.25rem;
     }
     
     .btn-no {
@@ -922,24 +956,39 @@ body::before {
     }
 }
 
-/* Responsive - Very small phones */
+/* Responsive – very small phones */
 @media (max-width: 360px) {
+    .container {
+        padding: 8px 10px;
+    }
+    
     .headline {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+    
+    .card-divider {
+        margin-bottom: 10px;
     }
     
     .subtitle,
     .subtitle-line2 {
-        font-size: 0.8rem;
+        font-size: 0.82rem;
+        margin-bottom: 2px;
+    }
+    
+    .subtitle-line2 {
+        margin-bottom: 12px;
     }
     
     .card {
-        padding: 25px 15px;
+        padding: 20px 14px 24px;
+        max-height: 76vh;
     }
     
     .btn-yes {
-        font-size: 1.2rem;
-        padding: 14px 35px;
+        font-size: 1.15rem;
+        padding: 12px 28px;
     }
     
     .signature {
@@ -948,12 +997,12 @@ body::before {
     }
 }
 
-/* Signature – glass pill */
+/* Signature – glass pill; safe-area for notched screens */
 .signature {
     font-family: var(--font);
     position: fixed;
-    bottom: 14px;
-    left: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    left: max(14px, env(safe-area-inset-left));
     font-size: 0.7rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
