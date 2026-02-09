@@ -30,7 +30,7 @@ The frontend is already connected to GitHub and auto-deploys. Just:
 
 2. **Update Worker Code:**
    - Click "Edit code"
-   - Copy entire contents of `worker.js`
+   - Copy entire contents of `worker/worker.js`
    - Paste into the editor
    - Click "Save and deploy"
 
@@ -60,8 +60,8 @@ npm install -g wrangler
 # Login
 wrangler login
 
-# Deploy
-cd ~/valentine-site
+# Deploy (from worker directory)
+cd ~/valentine-site/worker
 wrangler deploy
 ```
 

@@ -22,8 +22,9 @@ A romantic Valentine's Day proposal site with an LLM-powered chatbot.
 │   ├── app.js         # Main interactions (buttons, confetti)
 │   ├── chat.js        # Chat widget functionality
 │   └── api.js         # API wrapper for chat endpoint
-├── worker.js          # Cloudflare Worker backend
-├── wrangler.toml      # Worker configuration
+├── worker/             # Worker deployment files (separate from Pages)
+│   ├── worker.js      # Cloudflare Worker backend
+│   └── wrangler.toml  # Worker configuration
 └── README.md
 ```
 
