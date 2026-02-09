@@ -304,7 +304,7 @@ body {
 /* Chat widget */
 .chat-widget {
     position: fixed;
-    bottom: 30px;
+    top: 30px;
     right: 30px;
     z-index: 100;
 }
@@ -342,7 +342,7 @@ body {
 
 .chat-panel {
     position: absolute;
-    bottom: 80px;
+    top: 80px;
     right: 0;
     width: 350px;
     max-width: calc(100vw - 60px);
@@ -354,17 +354,17 @@ body {
     display: none;
     flex-direction: column;
     overflow: hidden;
-    animation: slideUp 0.3s ease;
+    animation: slideDown 0.3s ease;
 }
 
 .chat-panel.open {
     display: flex;
 }
 
-@keyframes slideUp {
+@keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -599,11 +599,11 @@ body {
     .chat-panel {
         width: calc(100vw - 40px);
         right: 20px;
-        bottom: 100px;
+        top: 100px;
     }
     
     .chat-widget {
-        bottom: 20px;
+        top: 20px;
         right: 20px;
     }
     
@@ -629,5 +629,35 @@ body {
     .btn-yes {
         width: 100%;
         max-width: 300px;
+    }
+}
+
+/* Signature */
+.signature {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    z-index: 50;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .chat-panel {
+        top: 100px;
+    }
+    
+    .chat-widget {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .signature {
+        font-size: 0.65rem;
+        bottom: 15px;
+        right: 15px;
     }
 }

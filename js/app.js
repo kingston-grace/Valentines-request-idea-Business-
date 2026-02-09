@@ -5,6 +5,15 @@ const successOverlay = document.getElementById('successOverlay');
 const confettiContainer = document.getElementById('confettiContainer');
 const buttonsContainer = document.getElementById('buttonsContainer');
 
+// Success messages array
+const successMessages = [
+    "yaah babe",
+    "thats my babe",
+    "Good girl Mai Mhembere",
+    "good mai Ropa",
+    "yaaay Mai Mhembere"
+];
+
 // YES button handler
 yesBtn.addEventListener('click', () => {
     // Hide buttons
@@ -13,6 +22,13 @@ yesBtn.addEventListener('click', () => {
     
     // Trigger confetti
     createConfetti();
+    
+    // Randomly select a success message
+    const randomMessage = successMessages[Math.floor(Math.random() * successMessages.length)];
+    const successTitle = document.getElementById('successTitle');
+    if (successTitle) {
+        successTitle.textContent = `${randomMessage} 💗`;
+    }
     
     // Show success overlay after a brief delay
     setTimeout(() => {
