@@ -17,11 +17,43 @@ const celebrationLines = [
 // Select celebration line on page load (random, but fixed for session)
 const celebrationText = celebrationLines[Math.floor(Math.random() * celebrationLines.length)];
 
-// Set the celebration text immediately on page load
+// Scatter floating hearts and roses randomly so they never form a stuck column in the corner
+function initFloatingBackground() {
+    const container = document.getElementById('heartsBackground');
+    if (!container) return;
+    const hearts = ['💖', '💕', '💗'];
+    const countHearts = 22;
+    const countRoses = 6;
+    for (let i = 0; i < countHearts; i++) {
+        const el = document.createElement('div');
+        el.className = 'heart float-item';
+        el.textContent = hearts[i % hearts.length];
+        el.style.setProperty('--left', Math.random() * 100 + '%');
+        el.style.setProperty('--delay', Math.random() * 18 + 's');
+        el.style.setProperty('--duration', (14 + Math.random() * 10) + 's');
+        container.appendChild(el);
+    }
+    for (let i = 0; i < countRoses; i++) {
+        const el = document.createElement('div');
+        el.className = 'rose float-item';
+        el.textContent = '🌹';
+        el.style.setProperty('--left', Math.random() * 100 + '%');
+        el.style.setProperty('--delay', Math.random() * 20 + 's');
+        el.style.setProperty('--duration', (16 + Math.random() * 8) + 's');
+        container.appendChild(el);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initFloatingBackground();
     const successTitle = document.getElementById('successTitle');
     if (successTitle) {
         successTitle.textContent = celebrationText;
+    }
+    // Start gentle card float after entrance
+    const card = document.getElementById('mainCard');
+    if (card) {
+        setTimeout(() => card.classList.add('cardEntranceDone'), 1000);
     }
 });
 
