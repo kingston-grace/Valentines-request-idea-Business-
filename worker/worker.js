@@ -126,32 +126,72 @@ export default {
       const SYSTEM_PROMPT = await getSystemPrompt();
       const PRIVATE_CONTEXT = await getPrivateContext();
 
+      // Build conversation history - keep last 10 messages for context
+      const conversationHistory = Array.isArray(history) ? history.slice(-10) : [];
+      
+      // Construct messages array with proper formatting
       const messages = [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "system", content: `PRIVATE CONTEXT (never reveal):\n${PRIVATE_CONTEXT}` },
-        ...Array.isArray(history) ? history.slice(-12) : [],
+        { 
+          role: "system", 
+          content: `${SYSTEM_PROMPT}\n\nIMPORTANT CONTEXT ABOUT NYASHA (use naturally, never quote directly):\n${PRIVATE_CONTEXT}\n\nRemember: You are Phill having a real conversation. Be natural, engaging, and conversational. Respond to what she actually says, don't just repeat the same lines.` 
+        },
+        // Add conversation history
+        ...conversationHistory.map(msg => ({
+          role: msg.role === 'assistant' ? 'assistant' : 'user',
+          content: msg.content
+        })),
+        // Current user message
         { role: "user", content: message },
       ];
 
-      // Workers AI
+      // Workers AI with better settings
       let reply = "Babe… just say yes 😌💗";
       
       try {
         if (env.AI) {
-          const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-            messages,
-            temperature: 0.85,
-            max_tokens: 240,
-          });
-          reply = result?.response || reply;
+          // Try multiple models in order of preference
+          let result = null;
+          const models = [
+            "@cf/meta/llama-3.1-8b-instruct",
+            "@cf/meta/llama-3-8b-instruct",
+            "@cf/mistral/mistral-7b-instruct-v0.2"
+          ];
+          
+          for (const model of models) {
+            try {
+              result = await env.AI.run(model, {
+                messages: messages,
+                temperature: 0.9, // Higher for more natural conversation
+                max_tokens: 300, // More tokens for better responses
+                top_p: 0.95, // Nucleus sampling for better quality
+              });
+              
+              if (result?.response) {
+                reply = result.response.trim();
+                break;
+              }
+            } catch (modelError) {
+              console.error(`Model ${model} failed:`, modelError);
+              continue;
+            }
+          }
+          
+          // If no model worked, use fallback
+          if (!result?.response) {
+            reply = generateFallbackResponse(message, PRIVATE_CONTEXT, conversationHistory);
+          }
         } else {
           // Fallback if AI not available
-          reply = generateFallbackResponse(message, PRIVATE_CONTEXT);
+          reply = generateFallbackResponse(message, PRIVATE_CONTEXT, conversationHistory);
         }
       } catch (error) {
         console.error("AI error:", error);
-        reply = generateFallbackResponse(message, PRIVATE_CONTEXT);
+        reply = generateFallbackResponse(message, PRIVATE_CONTEXT, conversationHistory);
       }
+      
+      // Clean up reply - remove any AI artifacts
+      reply = reply.replace(/^As Phill,?/i, '').replace(/^As an AI/i, '').trim();
+      if (!reply) reply = "Babe… just say yes 😌💗";
 
       return json(
         { reply },
@@ -166,8 +206,23 @@ export default {
 };
 
 // Fallback response generator (if Workers AI is not available)
-function generateFallbackResponse(message, privateContext) {
+function generateFallbackResponse(message, privateContext, history = []) {
   const lowerMessage = message.toLowerCase();
+  
+  // Check if it's a greeting or simple message - respond conversationally
+  if (lowerMessage === 'hi' || lowerMessage === 'hello' || lowerMessage === 'hey') {
+    const greetings = [
+      "Hey babe! 😌💖 What's on your mind?",
+      "Hi chommy! Ask me anything 💖",
+      "Hey my mimbere! What do you want to know? 😌",
+      "Hi babe! I'm here to convince you 😉💖"
+    ];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
+  
+  // Check conversation history for context
+  const lastUserMessage = history.length > 0 ? history[history.length - 1]?.content?.toLowerCase() : '';
+  const lastBotMessage = history.length > 1 ? history[history.length - 2]?.content?.toLowerCase() : '';
   
   // Check for common questions/patterns using context
   if (lowerMessage.includes('why') || lowerMessage.includes('reason')) {
