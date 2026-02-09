@@ -20,57 +20,97 @@ yesBtn.addEventListener('click', () => {
     }, 500);
 });
 
-// NO button runaway behavior
-let noButtonMoved = false;
+// NO button teleport behavior - appears and disappears around the page
+let noButtonInterval = null;
+let initialNoButtonPosition = null;
 
-function moveNoButton() {
-    const container = buttonsContainer.getBoundingClientRect();
+function getRandomPosition() {
     const button = noBtn.getBoundingClientRect();
+    const buttonWidth = button.width;
+    const buttonHeight = button.height;
     
-    // Calculate safe bounds (within container)
-    const maxX = container.width - button.width - 20;
-    const maxY = container.height - button.height - 20;
+    // Get viewport dimensions
+    const maxX = window.innerWidth - buttonWidth - 20;
+    const maxY = window.innerHeight - buttonHeight - 20;
     
-    // Random position within bounds
-    const randomX = Math.random() * maxX - (maxX / 2);
-    const randomY = Math.random() * maxY - (maxY / 2);
-    const randomRot = (Math.random() - 0.5) * 30; // -15 to 15 degrees
+    // Random position within viewport
+    const randomX = Math.max(20, Math.random() * maxX);
+    const randomY = Math.max(20, Math.random() * maxY);
     
-    // Set CSS variables for transform
-    noBtn.style.setProperty('--random-x', randomX);
-    noBtn.style.setProperty('--random-y', randomY);
-    noBtn.style.setProperty('--random-rot', randomRot);
+    return { x: randomX, y: randomY };
+}
+
+function teleportNoButton() {
+    // Fade out
+    noBtn.style.opacity = '0';
+    noBtn.style.transform = 'scale(0.5)';
+    noBtn.style.pointerEvents = 'none';
     
-    noButtonMoved = true;
+    setTimeout(() => {
+        // Move to new position
+        const newPos = getRandomPosition();
+        noBtn.style.left = newPos.x + 'px';
+        noBtn.style.top = newPos.y + 'px';
+        
+        // Fade in at new position
+        setTimeout(() => {
+            noBtn.style.opacity = '1';
+            noBtn.style.transform = 'scale(1)';
+            noBtn.style.pointerEvents = 'auto';
+        }, 100);
+    }, 200);
+}
+
+function startNoButtonTeleport() {
+    // Store initial position relative to buttons container
+    if (!initialNoButtonPosition) {
+        const containerRect = buttonsContainer.getBoundingClientRect();
+        const buttonRect = noBtn.getBoundingClientRect();
+        initialNoButtonPosition = {
+            x: buttonRect.left - containerRect.left,
+            y: buttonRect.top - containerRect.top
+        };
+    }
+    
+    // Convert to fixed positioning
+    const containerRect = buttonsContainer.getBoundingClientRect();
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = (containerRect.left + initialNoButtonPosition.x) + 'px';
+    noBtn.style.top = (containerRect.top + initialNoButtonPosition.y) + 'px';
+    
+    // Start teleporting every 2-3 seconds
+    if (!noButtonInterval) {
+        noButtonInterval = setInterval(() => {
+            teleportNoButton();
+        }, 2000 + Math.random() * 1000);
+    }
 }
 
 // Move NO button on hover (desktop)
 noBtn.addEventListener('mouseenter', () => {
-    if (!noButtonMoved) {
-        moveNoButton();
-    }
+    teleportNoButton();
+    startNoButtonTeleport();
 });
 
 // Move NO button on touch/mobile
 noBtn.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    moveNoButton();
-    // Show playful message if they somehow click it
-    setTimeout(() => {
-        if (noButtonMoved) {
-            alert("Eish babe 😭 you're KUTUBWIDA... try again 😌");
-            moveNoButton(); // Move again
-        }
-    }, 100);
+    teleportNoButton();
+    startNoButtonTeleport();
 });
 
 // Also move on click attempt
 noBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    moveNoButton();
     alert("Eish babe 😭 you're KUTUBWIDA... try again 😌");
-    moveNoButton(); // Move again
+    teleportNoButton();
+    startNoButtonTeleport();
 });
+
+// Start teleporting after page load
+setTimeout(() => {
+    startNoButtonTeleport();
+}, 1000);
 
 // Confetti animation
 function createConfetti() {

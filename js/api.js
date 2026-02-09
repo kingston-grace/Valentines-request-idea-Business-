@@ -15,13 +15,26 @@ async function sendChatMessage(message, history = []) {
         });
 
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API error response:', errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+        
+        if (!data.reply) {
+            throw new Error('No reply in response');
+        }
+        
         return data.reply;
     } catch (error) {
         console.error('Chat API error:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            url: `${API_BASE}/api/chat`
+        });
+        
         // Fallback response if API fails
         return "Eish babe, something went wrong! But you know I'd still convince you to say yes 😌💖";
     }
