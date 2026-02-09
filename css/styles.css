@@ -5,35 +5,31 @@
 }
 
 :root {
-    --pink-primary: #e84a7a;
-    --pink-light: #ff9ebb;
-    --pink-dark: #c73d63;
-    --purple-primary: #b366e8;
-    --purple-light: #d9a8f5;
-    --purple-dark: #7b3fb8;
-    --rose: #f07896;
-    --rose-light: #ffc2d4;
+    --pink-primary: #ff2d6a;
+    --pink-light: #ff7aa5;
+    --pink-dark: #e91e5c;
+    --purple-primary: #c084fc;
+    --purple-light: #e9d5ff;
+    --purple-dark: #a855f7;
+    --rose: #fb7185;
+    --rose-light: #fecdd3;
     --white: #ffffff;
-    --shadow: rgba(0, 0, 0, 0.12);
-    --glow: rgba(232, 74, 122, 0.4);
-    --glass-bg: rgba(255, 255, 255, 0.35);
-    --glass-border: rgba(255, 255, 255, 0.7);
-    --glass-highlight: rgba(255, 255, 255, 0.5);
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'Outfit', -apple-system, sans-serif;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --glow: rgba(255, 45, 106, 0.5);
+    --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
-    font-family: var(--font-body);
-    font-weight: 400;
+    font-family: var(--font);
+    font-weight: 500;
     min-height: 100vh;
     max-height: 100vh;
     height: 100vh;
     background:
-        radial-gradient(ellipse 140% 100% at 10% 0%, rgba(255, 200, 220, 0.7) 0%, transparent 45%),
-        radial-gradient(ellipse 100% 120% at 90% 100%, rgba(220, 180, 255, 0.6) 0%, transparent 45%),
-        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255, 180, 210, 0.4) 0%, transparent 55%),
-        linear-gradient(165deg, #ffe8f0 0%, #f5e0ff 35%, #ffd0e4 70%, #eed8fa 100%);
+        radial-gradient(ellipse 120% 90% at 5% 0%, rgba(255, 120, 165, 0.6) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 100% at 95% 100%, rgba(192, 132, 252, 0.55) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251, 113, 133, 0.35) 0%, transparent 60%),
+        linear-gradient(160deg, #fff0f5 0%, #fae8ff 30%, #fce7f3 60%, #f5d0fe 100%);
     background-attachment: fixed;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -44,7 +40,7 @@ body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
 }
@@ -71,13 +67,20 @@ body::before {
 }
 
 .hearts-background .heart {
-    font-size: clamp(18px, 4vw, 28px);
-    filter: drop-shadow(0 2px 8px rgba(232, 74, 122, 0.35));
+    font-size: clamp(20px, 4.5vw, 30px);
+    filter: drop-shadow(0 2px 10px rgba(255, 45, 106, 0.4));
+    animation: floatUp var(--duration, 18s) var(--delay, 0s) infinite linear, floatTwinkle 3s ease-in-out infinite;
 }
 
 .hearts-background .rose {
-    font-size: clamp(16px, 3.5vw, 24px);
-    filter: drop-shadow(0 2px 8px rgba(199, 62, 92, 0.35));
+    font-size: clamp(18px, 4vw, 26px);
+    filter: drop-shadow(0 2px 10px rgba(251, 113, 133, 0.4));
+    animation: floatUp var(--duration, 18s) var(--delay, 0s) infinite linear, floatTwinkle 3.5s ease-in-out infinite;
+}
+
+@keyframes floatTwinkle {
+    0%, 100% { filter: drop-shadow(0 2px 10px rgba(255, 45, 106, 0.35)) brightness(0.92); }
+    50% { filter: drop-shadow(0 4px 14px rgba(255, 45, 106, 0.55)) brightness(1.12); }
 }
 
 @keyframes floatUp {
@@ -110,45 +113,77 @@ body::before {
     overflow: hidden;
 }
 
-/* Card – strong glassmorphism: frosted glass, rim light, classy */
+/* Card – clearly glassy: see-through frosted glass so background shows */
 .card {
     background: linear-gradient(
-        152deg,
-        rgba(255, 255, 255, 0.42) 0%,
-        rgba(255, 235, 248, 0.38) 40%,
-        rgba(245, 228, 255, 0.35) 100%
+        165deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 245, 252, 0.22) 40%,
+        rgba(248, 238, 255, 0.2) 100%
     );
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(32px) saturate(1.2);
+    -webkit-backdrop-filter: blur(32px) saturate(1.2);
     border-radius: 28px;
-    padding: 48px 40px 52px;
+    padding: 44px 40px 48px;
     max-width: 540px;
     width: 100%;
     max-height: 90vh;
+    overflow-x: hidden;
     overflow-y: auto;
-    box-shadow:
-        0 0 0 1px var(--glass-border) inset,
-        0 2px 0 0 rgba(255, 255, 255, 0.6) inset,
-        0 32px 64px -16px rgba(200, 100, 150, 0.25),
-        0 16px 32px -8px rgba(120, 60, 160, 0.15);
     position: relative;
     text-align: center;
     animation: cardEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    border: 1px solid rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+        0 8px 32px rgba(255, 45, 106, 0.2),
+        0 24px 48px -12px rgba(168, 85, 247, 0.15);
+    isolation: isolate;
 }
 
-.card::before {
-    content: '';
+/* Glossy top reflection – visible glass shine */
+.card-gloss {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.5) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
     pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.55) 0%,
+        rgba(255, 255, 255, 0.15) 35%,
+        transparent 65%
+    );
+    animation: glossShimmer 4s ease-in-out infinite;
+    -webkit-animation: glossShimmer 4s ease-in-out infinite;
+}
+
+@keyframes glossShimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+/* Moving shimmer streak across card */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: cardShimmer 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes cardShimmer {
+    0% { left: -100%; }
+    50% { left: -100%; }
+    100% { left: 150%; }
 }
 
 .cardEntranceDone {
@@ -168,17 +203,15 @@ body::before {
 
 @keyframes cardFloat {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-10px); }
 }
 
-/* Staggered content entrance – bolder delays */
-.card .card-eyebrow     { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
-.card .headline        { animation: fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both; }
-.card .card-divider    { animation: fadeSlideUp 0.4s ease 0.38s both; }
-.card .subtitle        { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both; }
-.card .subtitle-line2  { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.52s both; }
-.card .signature-text  { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both; }
-.card .buttons-container { animation: fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.72s both; }
+/* Staggered content entrance */
+.card .headline        { animation: fadeSlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+.card .card-divider    { animation: fadeSlideUp 0.4s ease 0.28s both; }
+.card .subtitle        { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both; }
+.card .subtitle-line2  { animation: fadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.48s both; }
+.card .buttons-container { animation: fadeSlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both; }
 
 @keyframes fadeSlideUp {
     from {
@@ -191,80 +224,65 @@ body::before {
     }
 }
 
-/* Card eyebrow + divider – classy, refined */
-.card-eyebrow {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--purple-dark);
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    margin-bottom: 14px;
-    opacity: 0.85;
-}
-
 .card-divider {
-    width: 56px;
-    height: 2px;
+    width: 64px;
+    height: 3px;
     background: linear-gradient(90deg, transparent, var(--pink-primary), var(--purple-primary), transparent);
-    border-radius: 2px;
-    margin: 0 auto 22px;
-    opacity: 0.65;
+    border-radius: 3px;
+    margin: 0 auto 24px;
+    opacity: 0.9;
 }
 
-/* Typography – bolder hierarchy */
+/* Headline – full gradient, shiny, animated glow */
 .headline {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 2.85rem);
-    font-weight: 700;
-    color: var(--pink-dark);
-    margin-bottom: 16px;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    text-shadow: 0 2px 16px rgba(232, 74, 122, 0.2);
-    animation: headlineGlow 3s ease-in-out infinite;
+    font-family: var(--font);
+    font-size: clamp(1.85rem, 5.2vw, 2.9rem);
+    font-weight: 800;
+    margin-bottom: 18px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    position: relative;
+    animation: headlineGlow 2.5s ease-in-out infinite;
 }
 
-.headline-name {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--pink-dark), var(--purple-dark));
+.headline-gradient {
+    background: linear-gradient(120deg, var(--pink-primary) 0%, var(--pink-dark) 30%, var(--purple-primary) 60%, var(--purple-dark) 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    padding: 0 2px;
+    filter: drop-shadow(0 2px 12px rgba(255, 45, 106, 0.35));
+    animation: headlineGlow 2.5s ease-in-out infinite, gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
 }
 
 @keyframes headlineGlow {
-    0%, 100% { text-shadow: 0 2px 16px rgba(232, 74, 122, 0.2); }
-    50% { text-shadow: 0 4px 24px rgba(232, 74, 122, 0.35); }
+    0%, 100% { filter: drop-shadow(0 2px 12px rgba(255, 45, 106, 0.35)); }
+    50% { filter: drop-shadow(0 4px 20px rgba(255, 45, 106, 0.5)); }
 }
 
 .subtitle {
     font-size: 1.05rem;
-    font-weight: 400;
+    font-weight: 600;
     color: var(--purple-dark);
     margin-bottom: 8px;
-    line-height: 1.55;
-    opacity: 0.9;
+    line-height: 1.5;
+    opacity: 0.95;
 }
 
 .subtitle-line2 {
     font-size: 1.05rem;
-    font-weight: 400;
+    font-weight: 600;
     color: var(--purple-dark);
-    margin-bottom: 20px;
-    line-height: 1.55;
-    opacity: 0.9;
+    margin-bottom: 28px;
+    line-height: 1.5;
+    opacity: 0.95;
 }
 
-.signature-text {
-    font-size: 0.88rem;
-    font-weight: 400;
-    color: rgba(123, 63, 184, 0.7);
-    margin-bottom: 36px;
-    text-align: right;
-    font-style: italic;
-    letter-spacing: 0.04em;
-}
 
 
 /* Buttons container */
@@ -278,23 +296,23 @@ body::before {
     transition: opacity 0.45s ease;
 }
 
-/* YES button – glassy pill with gradient fill + rim light */
+/* YES button – glossy + moving shimmer */
 .btn-yes {
-    font-family: var(--font-body);
-    background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 45%, var(--purple-primary) 100%);
-    background-size: 200% 200%;
+    font-family: var(--font);
+    background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 40%, var(--purple-primary) 100%);
     color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     padding: 20px 56px;
-    font-size: 1.7rem;
-    font-weight: 600;
-    border-radius: 50px;
+    font-size: 1.65rem;
+    font-weight: 700;
+    border-radius: 999px;
     cursor: pointer;
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.4) inset,
-        0 16px 40px -8px rgba(232, 74, 122, 0.45),
-        0 8px 24px -4px rgba(123, 63, 184, 0.2);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.6s ease, border-color 0.25s ease;
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+        0 4px 0 0 rgba(255, 255, 255, 0.25) inset,
+        0 20px 48px -10px rgba(255, 45, 106, 0.5),
+        0 10px 28px -6px rgba(168, 85, 247, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -302,32 +320,37 @@ body::before {
     gap: 10px;
 }
 
+/* Shimmer sweep across button */
 .btn-yes::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 0.5s ease;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.45),
+        transparent
+    );
+    animation: btnShimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes btnShimmer {
+    0% { left: -100%; }
+    70% { left: -100%; }
+    100% { left: 200%; }
 }
 
 .btn-yes:hover {
-    background-position: 100% 50%;
-    transform: translateY(-4px) scale(1.03);
-    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-5px) scale(1.04);
+    border-color: rgba(255, 255, 255, 0.8);
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.5) inset,
-        0 24px 56px -12px rgba(232, 74, 122, 0.5),
-        0 12px 32px -6px rgba(123, 63, 184, 0.25);
-}
-
-.btn-yes:hover::before {
-    width: 320px;
-    height: 320px;
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+        0 4px 0 0 rgba(255, 255, 255, 0.35) inset,
+        0 28px 56px -12px rgba(255, 45, 106, 0.55),
+        0 14px 36px -8px rgba(168, 85, 247, 0.35);
 }
 
 .btn-yes:active {
@@ -351,7 +374,7 @@ body::before {
 
 /* NO button – subtle glass */
 .btn-no {
-    font-family: var(--font-body);
+    font-family: var(--font);
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -373,22 +396,23 @@ body::before {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05) inset, 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-/* Success overlay – glassy fullscreen */
+/* Success overlay – vibrant glossy */
 .success-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, rgba(232, 74, 122, 0.88) 0%, rgba(123, 63, 184, 0.86) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: linear-gradient(145deg, rgba(255, 45, 106, 0.92) 0%, rgba(168, 85, 247, 0.9) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     animation: overlayFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
 .success-overlay.show {
@@ -432,12 +456,13 @@ body::before {
 }
 
 .success-content h2 {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 700;
+    font-family: var(--font);
+    font-size: 2.75rem;
+    font-weight: 800;
     margin-bottom: 14px;
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
-    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+    letter-spacing: -0.03em;
+    color: #fff;
 }
 
 .success-secondary {
@@ -471,23 +496,21 @@ body::before {
 }
 
 .chat-button {
-    font-family: var(--font-body);
-    background: linear-gradient(135deg, rgba(232, 74, 122, 0.85) 0%, rgba(179, 102, 232, 0.85) 100%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    font-family: var(--font);
+    background: linear-gradient(135deg, var(--pink-primary) 0%, var(--purple-primary) 100%);
     color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
     padding: 14px 24px;
     cursor: pointer;
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-        0 12px 32px -4px rgba(232, 74, 122, 0.4);
+        0 0 0 1px rgba(255, 255, 255, 0.35) inset,
+        0 14px 36px -6px rgba(255, 45, 106, 0.45);
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 0.98rem;
-    font-weight: 600;
+    font-weight: 700;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     animation: floatButton 3.5s ease-in-out infinite;
 }
@@ -556,7 +579,7 @@ body::before {
 }
 
 .chat-header h3 {
-    font-family: var(--font-body);
+    font-family: var(--font);
     font-size: 1.15rem;
     font-weight: 600;
     margin: 0;
@@ -644,7 +667,7 @@ body::before {
 }
 
 #chatInput {
-    font-family: var(--font-body);
+    font-family: var(--font);
     flex: 1;
     padding: 12px 18px;
     border: 2px solid #e8e4ec;
@@ -660,7 +683,7 @@ body::before {
 }
 
 .chat-send {
-    font-family: var(--font-body);
+    font-family: var(--font);
     background: linear-gradient(135deg, var(--pink-primary) 0%, var(--purple-primary) 100%);
     color: var(--white);
     border: none;
@@ -780,10 +803,6 @@ body::before {
         font-size: 1rem;
     }
     
-    .signature-text {
-        font-size: 0.75rem;
-    }
-    
     .btn-yes {
         padding: 18px 50px;
         font-size: 1.5rem;
@@ -825,11 +844,6 @@ body::before {
         padding: 10px;
     }
     
-    .card-eyebrow {
-        font-size: 0.75rem;
-        letter-spacing: 0.15em;
-    }
-    
     .headline {
         font-size: 1.5rem;
         margin-bottom: 15px;
@@ -843,11 +857,6 @@ body::before {
     .subtitle-line2 {
         font-size: 0.85rem;
         margin-bottom: 12px;
-    }
-    
-    .signature-text {
-        font-size: 0.65rem;
-        margin-bottom: 25px;
     }
     
     .card {
@@ -941,7 +950,7 @@ body::before {
 
 /* Signature – glass pill */
 .signature {
-    font-family: var(--font-body);
+    font-family: var(--font);
     position: fixed;
     bottom: 14px;
     left: 14px;
@@ -984,26 +993,32 @@ body::before {
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .hearts-background .float-item,
+    .hearts-background .heart,
+    .hearts-background .rose,
     .btn-yes,
     .chat-button,
     .message,
-    .confetti {
+    .confetti,
+    .card-gloss {
+        animation: none !important;
+    }
+    
+    .card::after {
         animation: none !important;
     }
     
     .hearts-background .heart,
     .hearts-background .rose {
-        opacity: 0.5;
+        opacity: 0.8;
     }
     
     .card,
     .card.cardEntranceDone,
-    .card .card-eyebrow,
     .card .headline,
+    .card .headline-gradient,
     .card .card-divider,
     .card .subtitle,
     .card .subtitle-line2,
-    .card .signature-text,
     .card .buttons-container {
         animation: none;
         opacity: 1;
