@@ -169,13 +169,13 @@ export default {
 function generateFallbackResponse(message, privateContext) {
   const lowerMessage = message.toLowerCase();
   
-  // Check for common questions/patterns
+  // Check for common questions/patterns using context
   if (lowerMessage.includes('why') || lowerMessage.includes('reason')) {
-    return "Because you're the most beautiful, intelligent, and amazing person I know, babe! Plus, remember when you beat me at go-karting? That's when I knew you were special 😌💖";
+    return "Because you're my best friend AND my girlfriend, babe. Plus uri Mwana we beam, ahutorinao plan 😌💖 Remember that white dress on Feb 5? That's when I knew 💖";
   }
   
-  if (lowerMessage.includes('no') || lowerMessage.includes('not sure')) {
-    return "Eish babe, you're KUTUBWIDA! 😭 But seriously, think about it - we have so many amazing memories together. Remember that white dress on Feb 5? That was magical 💖";
+  if (lowerMessage.includes('no') || lowerMessage.includes('not sure') || lowerMessage.includes('maybe')) {
+    return "Eish babe, you're KUTUBWIDA! 😭 But seriously chommy, think about it - we have so many amazing memories. Remember those blankets? That warmth is everything 💖";
   }
   
   if (lowerMessage.includes('japan') || lowerMessage.includes('linda')) {
@@ -190,17 +190,30 @@ function generateFallbackResponse(message, privateContext) {
     return "I love you so much, my mimbere! You're everything to me. Your soft voice, your beautiful eyes, your sweetness - I'm so lucky 💖";
   }
   
-  if (lowerMessage.includes('chess') || lowerMessage.includes('go-kart')) {
+  if (lowerMessage.includes('chess') || lowerMessage.includes('go-kart') || lowerMessage.includes('beat')) {
     return "Yes, you beat me! And I'm still proud of you, chommy. That's why you should say yes - you're amazing at everything! 💖";
   }
   
-  // Default romantic response
+  if (lowerMessage.includes('scar') || lowerMessage.includes('hand')) {
+    return "Babe, that scar doesn't make you less beautiful. If anything, I want to be as permanent in your heart as that scar is on your hand 💖";
+  }
+  
+  if (lowerMessage.includes('friend') || lowerMessage.includes('best friend')) {
+    return "Exactly! You found both a best friend and a boyfriend in me. That's why this is special, chommy. Say yes? 💖";
+  }
+  
+  if (lowerMessage.includes('eat') || lowerMessage.includes('food')) {
+    return "Did you eat? Make sure you're eating, babe! But also... say yes to being my Valentine? 😌💖";
+  }
+  
+  // Default romantic responses with context
   const responses = [
-    "You know I love you, babe! Say yes and let's make more amazing memories together 💖",
-    "My papie, you're the best thing that's ever happened to me. Please say yes? 😌💖",
+    "You know I love you, babe! Plus uri Mwana we beam, ahutorinao plan. Say yes? 💖",
+    "My papie, you're the best thing that's ever happened to me. Remember Feb 5? That white dress? Magical. Say yes? 😌💖",
     "Kabamnini, I brought roses, jokes, and all my love. What more could you want? 💖",
     "Babe, remember those blankets? That's the kind of warmth I want forever. Say yes? 💖",
-    "You're my everything, chommy. Your beauty, your intelligence, your everything. Please? 💖"
+    "You're my everything, chommy. Your beauty, your intelligence, your everything. Plus you're Mwana we beam! Please say yes? 💖",
+    "Chommy, you found both a best friend and boyfriend in me. That's why this matters. Say yes? 💖"
   ];
   
   return responses[Math.floor(Math.random() * responses.length)];
