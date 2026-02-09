@@ -132,10 +132,11 @@ setTimeout(() => {
     startNoButtonTeleport();
 }, 1000);
 
-// Confetti animation
+// Confetti animation – varied colors and motion
 function createConfetti() {
-    const confettiCount = 50;
-    const types = ['heart', 'rose', 'regular'];
+    const confettiCount = 55;
+    const types = ['heart', 'heart', 'rose', 'regular'];
+    const hearts = ['💖', '💕', '💗'];
     
     for (let i = 0; i < confettiCount; i++) {
         setTimeout(() => {
@@ -145,20 +146,16 @@ function createConfetti() {
             confetti.className = `confetti ${type}`;
             
             if (type === 'heart') {
-                confetti.textContent = '💖';
+                confetti.textContent = hearts[Math.floor(Math.random() * hearts.length)];
             }
             
-            // Random starting position
             confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.animationDelay = Math.random() * 0.5 + 's';
-            confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+            confetti.style.animationDelay = Math.random() * 0.4 + 's';
+            confetti.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
             
             confettiContainer.appendChild(confetti);
             
-            // Remove after animation
-            setTimeout(() => {
-                confetti.remove();
-            }, 4000);
-        }, i * 30); // Stagger the creation
+            setTimeout(() => confetti.remove(), 4500);
+        }, i * 25);
     }
 }
