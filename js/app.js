@@ -5,14 +5,25 @@ const successOverlay = document.getElementById('successOverlay');
 const confettiContainer = document.getElementById('confettiContainer');
 const buttonsContainer = document.getElementById('buttonsContainer');
 
-// Success messages array
-const successMessages = [
-    "yaah babe",
-    "thats my babe",
-    "Good girl Mai Mhembere",
-    "good mai Ropa",
-    "yaaay Mai Mhembere"
+// Celebration lines array (cleaned and consistent)
+const celebrationLines = [
+    "Yaaay babe 💗",
+    "That's my babe 💗",
+    "Good girl, Mai Mhembere 💗",
+    "Good girl, Mai Ropa 💗",
+    "Yaaay, Mai Mhembere 💗",
 ];
+
+// Select celebration line on page load (random, but fixed for session)
+const celebrationText = celebrationLines[Math.floor(Math.random() * celebrationLines.length)];
+
+// Set the celebration text immediately on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const successTitle = document.getElementById('successTitle');
+    if (successTitle) {
+        successTitle.textContent = celebrationText;
+    }
+});
 
 // YES button handler
 yesBtn.addEventListener('click', () => {
@@ -22,13 +33,6 @@ yesBtn.addEventListener('click', () => {
     
     // Trigger confetti
     createConfetti();
-    
-    // Randomly select a success message
-    const randomMessage = successMessages[Math.floor(Math.random() * successMessages.length)];
-    const successTitle = document.getElementById('successTitle');
-    if (successTitle) {
-        successTitle.textContent = `${randomMessage} 💗`;
-    }
     
     // Show success overlay after a brief delay
     setTimeout(() => {

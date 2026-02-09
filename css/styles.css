@@ -310,14 +310,24 @@ body {
 
 .success-content h2 {
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.success-message {
-    font-size: 1.5rem;
+.success-secondary {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    max-width: 500px;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+.success-final {
+    font-size: 1.1rem;
     max-width: 500px;
     line-height: 1.6;
+    opacity: 0.9;
+    font-style: italic;
 }
 
 /* Chat widget */
@@ -634,8 +644,13 @@ body {
         font-size: 2rem;
     }
     
-    .success-message {
-        font-size: 1.2rem;
+    .success-secondary {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+    
+    .success-final {
+        font-size: 1rem;
         padding: 0 20px;
     }
 }
